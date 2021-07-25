@@ -10,15 +10,13 @@ import Axios from "axios";
 
 const listProducts = (category='', searchKeyword = '', sortOrder= '') => async (dispatch) => {
   try {
-
     dispatch({ type: PRODUCT_LIST_REQUEST });
     console.log("hi",category,searchKeyword,sortOrder);
     const { data } = await Axios.get("/api/products?category="+ "" + "&searchKeyword=" +
-      "" + "&sortOrder=" + "");
-      
+      "" + "&sortOrder=" + ""); 
     var a=[]
     var c=searchKeyword.split(" ")
-    console.log(c);
+    console.log(data);
     for(let i=0;i<data.length;i++){
       for(let j=0;j<c.length;j++){
         if(data[i].description.match(c[j])){
@@ -26,8 +24,12 @@ const listProducts = (category='', searchKeyword = '', sortOrder= '') => async (
         }
       }
     }
-    console.log(a);
-      
+    if(a.length===0){
+      a=data
+    }
+    let b=[...new Set(a)]
+    console.log(b);
+   
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: a });
   }
   catch (error) {
@@ -35,7 +37,20 @@ const listProducts = (category='', searchKeyword = '', sortOrder= '') => async (
     dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
   }
 }
+const sortProducts = (category='', searchKeyword = '', sortOrder= '') => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
+    console.log("hi",category,searchKeyword,sortOrder);
+    const { data } = await Axios.get("/api/products?category="+ category + "&searchKeyword=" +
+      searchKeyword + "&sortOrder=" + sortOrder); 
 
+    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+  }
+  catch (error) {
+
+    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+  }
+}
 const saveProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
@@ -106,4 +121,4 @@ const saveProductReview = (productId,review)=> async(dispatch,getState)=>{
   }
 };
 
-export { listProducts, detailsProduct, saveProduct, deleteProduct, saveProductReview }
+export { listProducts, detailsProduct, sortProducts, saveProduct, deleteProduct, saveProductReview }

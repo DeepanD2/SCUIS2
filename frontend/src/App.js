@@ -42,7 +42,7 @@ function App() {
             <button onClick={openMenu}>
               &#9776;
               </button>
-            <Link to="/" className="brand">DressMe</Link>
+            <Link to="/" className="brand">SCUIS</Link>
           </div>
 
           <div>
@@ -125,7 +125,7 @@ function App() {
         </main>
 
         <footer className="footer">
-          &#169; 2017 DressMe
+          &#169; 2021 SCUIS
         </footer>
       </div>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import {sortProducts} from "../actions/productActions"
 import Rating from '../components/Rating';
 
 function HomeScreen(props) {
@@ -25,7 +26,7 @@ function HomeScreen(props) {
   }
   const sortHandler = (e) => {
     setSortOrder(e.target.value);
-    dispatch(listProducts(category, searchKeyword, sortOrder))
+    dispatch(sortProducts(category, searchKeyword, sortOrder))
   }
 
   return <>
